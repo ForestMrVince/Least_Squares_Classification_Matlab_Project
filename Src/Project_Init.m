@@ -16,5 +16,8 @@ test_labels = test_labels.';
 %清除0元素过多的列
 [train_images,test_images] = images_zero_columes_erase(train_images,test_images);
 
+%特征工程
+[train_images,test_images] = FeatureExtraction(train_images,test_images);
+
 end
 

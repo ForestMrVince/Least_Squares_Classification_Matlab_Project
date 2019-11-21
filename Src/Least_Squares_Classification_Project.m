@@ -13,3 +13,5 @@ test_labels_file = '../Data/MNIST/t10k-labels.idx1-ubyte';
 %删除文件路径
 clearvars train_images_file train_labels_file test_images_file test_labels_file;
 
+%求解器初始化
+[Theta]=Sover(train_images,train_labels);
