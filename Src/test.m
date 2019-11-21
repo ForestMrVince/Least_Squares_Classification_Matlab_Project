@@ -2,6 +2,15 @@ function [train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,test_Z_right
 %≤‚ ‘
 %   —µ¡∑ºØ≤‚ ‘∫Õ≤‚ ‘ºØ≤‚ ‘
 
+train_Z_right = 0;
+train_Z_wrong = 0;
+train_NZ_right = 0;
+train_NZ_wrong = 0;
+test_Z_right = 0;
+test_Z_wrong = 0;
+test_NZ_right = 0;
+test_NZ_wrong = 0;
+
 %—µ¡∑ºØ≤‚ ‘
 Data_number = size(train_images,1);
 train_results = ones(Data_number,10);
@@ -14,7 +23,7 @@ close(window);
 window = waitbar(0,'—µ¡∑ºØ∑÷¿‡∑÷Œˆ÷–£¨«Î…‘∫Ú£°');
 for j = 1:Data_number
     for k = 1:10
-        Character_New = abs(train_results(k,j) - 1);
+        Character_New = abs(train_results(j,k) - 1);
         if k==1
             Character_Old = Character_New;
             Win = k;
@@ -55,7 +64,7 @@ close(window);
 window = waitbar(0,'≤‚ ‘ºØ∑÷¿‡∑÷Œˆ÷–£¨«Î…‘∫Ú£°');
 for j = 1:Data_number
     for k = 1:10
-        Character_New = abs(test_results(k,j) - 1);
+        Character_New = abs(test_results(j,k) - 1);
         if k==1
             Character_Old = Character_New;
             Win = k;
