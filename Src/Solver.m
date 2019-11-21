@@ -1,4 +1,4 @@
-function [Theta] = Sover(train_images,train_labels)
+function [Theta] = Solver(train_images,train_labels)
 %最小二乘求解器初始化
 %   生成最小二乘计算所需要的矩阵A和B
 
@@ -69,11 +69,15 @@ window = waitbar(0,'求解中，请稍候！');
 
 for j = 1:10
     b_temp = ones(b_size(j),1);
-    A_temp = A((1:b_size(j)),train_images_n,j);
+    A_temp = A((1:b_size(j)),:,j);
     
-    [Q,R]=qr(A_temp);
-    Matrix_temp = (Q.')*b_temp;
-    Theta(:,j) = Matrix_temp/R;
+    [Q,R]=qr(A_temp,0);
+    
+    Q_T = Q.';
+    
+    Matrix_temp = Q_T*b_temp;
+    R_Inv = pinv(R);
+    Theta(:,j) = R_Inv*Matrix_temp;
     
     waitbar(j/10);
 end

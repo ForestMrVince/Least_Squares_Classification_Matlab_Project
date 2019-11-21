@@ -14,4 +14,7 @@ test_labels_file = '../Data/MNIST/t10k-labels.idx1-ubyte';
 clearvars train_images_file train_labels_file test_images_file test_labels_file;
 
 %求解器初始化
-[Theta]=Sover(train_images,train_labels);
+[Theta]=Solver(train_images,train_labels);
+
+%测试
+[train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]=test(Theta,train_images,train_labels,test_images,test_labels);
