@@ -9,9 +9,7 @@ test_images = Read_image(test_images_file);
 test_labels = Read_label(test_labels_file);
 %转置
 train_images = train_images.';
-train_labels = train_labels.';
 test_images = test_images.';
-test_labels = test_labels.';
 
 %清除0元素过多的列
 [train_images,test_images] = images_zero_columes_erase(train_images,test_images);
