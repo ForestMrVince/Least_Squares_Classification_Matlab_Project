@@ -14,13 +14,13 @@ Character = 0;%需要挑选的变量
 %删除文件路径
 clearvars train_images_file train_labels_file test_images_file test_labels_file;
 
-%线性求解器初始化
-[Theta]=Linear_solver(train_images,train_labels,Character);
+% %线性求解器
+% [Theta]=Linear_solver(train_images,train_labels,Character);
 
-%线性求解器结果测试
-[train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
-    test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
-    =Linear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
+% %线性求解器结果测试
+% [train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
+%     test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
+%     =Linear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
 
 %输出结果
 Results_output_xlsx(train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
