@@ -1,4 +1,4 @@
-function [Theta] = Linear_solver(train_images,train_labels,Character)
+function [Theta,b] = Linear_solver(train_images,train_labels,Character)
 %线性求解器
 %   将images中的Character挑出来，然后求解线性最小二乘模型
 
@@ -18,7 +18,7 @@ for i = 1:train_images_m
 end
 close(window);
 
-window = waitbar(0,'求解中，请稍候！');
+window = waitbar(0,'线性求解中，请稍候！');
 [Q,R]=qr(A,0);
 waitbar(2/5);
 Q_T = Q.';
