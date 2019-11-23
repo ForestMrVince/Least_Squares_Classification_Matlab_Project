@@ -15,12 +15,20 @@ Character = 0;%需要挑选的变量
 clearvars train_images_file train_labels_file test_images_file test_labels_file;
 
 % %线性求解器
+% %线性
 % [Theta]=Linear_solver(train_images,train_labels,Character);
+%非线性
+[Theta]=NonLinear_solver(train_images,train_labels,Character);
 
-% %线性求解器结果测试
+% %求解器结果测试
+% %线性
 % [train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
 %     test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
 %     =Linear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
+%非线性
+[train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
+    test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
+    =NoLinear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
 
 %输出结果
 Results_output_xlsx(train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
