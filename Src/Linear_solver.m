@@ -1,6 +1,6 @@
 function [Theta] = Linear_solver(train_images,train_labels,Character)
 %线性求解器
-%   将images中的Character挑出来
+%   将images中的Character挑出来，然后求解线性最小二乘模型
 
 train_images_m = size(train_images,1);
 

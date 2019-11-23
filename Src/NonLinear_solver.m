@@ -1,6 +1,7 @@
-function [outputArg1,outputArg2] = NonLinear_solver(inputArg1,inputArg2)
-%UNTITLED 此处显示有关此函数的摘要
-%   此处显示详细说明
+function [Theta]=NonLinear_solver(train_images,train_labels,Character)
+%非线性求解器
+%   将images中的Character挑出来，然后求解非线性最小二乘模型
+
 outputArg1 = inputArg1;
 outputArg2 = inputArg2;
 end

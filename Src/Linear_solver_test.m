@@ -1,7 +1,7 @@
 function [train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
     test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
     =Linear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character)
-%≤‚ ‘
+%œﬂ–‘«ÛΩ‚∆˜≤‚ ‘
 %   —µ¡∑ºØ≤‚ ‘∫Õ≤‚ ‘ºØ≤‚ ‘
 
 train_Z_right = 0;
