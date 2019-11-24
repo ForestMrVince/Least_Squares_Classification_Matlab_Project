@@ -8,7 +8,7 @@ train_labels_file = '../Data/MNIST/train-labels.idx1-ubyte';
 test_images_file = '../Data/MNIST/t10k-images.idx3-ubyte';
 test_labels_file = '../Data/MNIST/t10k-labels.idx1-ubyte';
 Character = 0;  %需要挑选的变量
-Lambda = 1;     %Lambda值
+Lambda = 100;   %Lambda值
 k_Max = 6;      %最大循环次数
 
 %先读取所有的文件内容并进行特征工程
@@ -19,8 +19,8 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 %求解器
 %线性
 [Theta,b]=Linear_solver(train_images,train_labels,Character);
-% %非线性
-% [Beta]=NonLinear_solver(train_images,b,Lambda,k_Max,Theta);
+%非线性
+[beta,k]=NonLinear_solver(train_images,b,Lambda,k_Max,Theta);
 
 %求解器结果测试
 % %线性

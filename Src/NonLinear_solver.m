@@ -1,14 +1,58 @@
-function [Beta]=NonLinear_solver(train_images,b,Lambda,k_Max,Theta)
+function [beta,k]=NonLinear_solver(train_images,b,Lambda,k_Max,Theta)
 %非线性求解器
 %   将images中的Character挑出来，然后求解非线性最小二乘模型
 
+window = waitbar(0,'非线性求解中，请稍候！');
+
 %非线性求解器设置
-Lambda_i = 0.1;
-Beta_i = Theta;
+k = 0;
+beta_i1 = Theta;
+Epsilon = 0.0001;
+waitbar(1/(13+k_Max));
+beta_char = sym('beta%d',[size(train_images,2),1]);
+waitbar(3/(13+k_Max));
+fun = arryfun(@sigmoid,train_images*beta_char)-b;
+waitbar(6/(13+k_Max));
+jacobian_matrix_fun = jacobian(fun,beta_char);
+waitbar(9/(13+k_Max));
+
+%第一个f的值
+beta_i0 = beta_i1;
+f = subs(fun,beta_char,beta_i0);
+waitbar(11/(13+k_Max));
+f = double(f);
+waitbar(13/(13+k_Max));
 
 for i = 1:k_Max
-    %[output] = MNIST_nonLinear_fun(train_images,b,Lambda,Beta_i);
+    if sum(f) < Epsilon
+       break; 
+    end
+    
+    beta_i0 = beta_i1;
+    f = f_1;
+    
+    jacobian_matrix = subs(jacobian_matrix_fun,beta_char,beta_i0);
+    jacobian_matrix = double(jacobian_matrix);
+    
+    beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*I)\(Lambda*beta_i0+(jacobian_matrix.')*f);
+    
+    f_1 = subs(fun,beta_char,beta_i1);
+    f_1 = double(f_1);
+    
+    if f_1 > f
+        break;
+    end
+    
+    k = i;
+    
+    waitbar((13+k)/(13+k_Max));
 end
+
+beta = beta_i0;
+
+waitbar((13+k_Max)/(13+k_Max));
+
+close(window);
 
 %an=[1,2,3;1,2,3;1,2,3]
 %an = arrayfun(@sigmoid,an)
@@ -26,7 +70,8 @@ end
 % y = ones(size(x_double,1),1)
 % y(2)=-1
 % beta = sym('beta%d',[4,1])
-% jacobian_matrix = jacobian(arrayfun(@sigmoid,x_double*beta)-y,beta)
+% f = arrayfun(@sigmoid,x_double*beta)-y
+% jacobian_matrix = jacobian(f,beta)
 % subs(jacobian_matrix,beta,[1;2;3;4])
 % double(ans)
 
