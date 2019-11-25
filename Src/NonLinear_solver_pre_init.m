@@ -11,13 +11,13 @@ i_max = size(train_images,1);
 waitbar(1/(1+i_max+i_max));
 parfor i = 1:i_max
     Sigmoid_array(i) = train_images(i,:)*beta_char;
-    waitbar((1+i)/(1+i_max+i_max));
 end
+waitbar((1+i_max)/(1+i_max+i_max));
 
 parfor j = 1:i_max
     pre_fun(j) = sigmoid(Sigmoid_array(j));
-    waitbar((1+j+i_max)/(1+i_max+i_max));%生成一个雅各布矩阵的元素模板，然后向内带入元素
 end
+waitbar((1+i_max+i_max)/(1+i_max+i_max));%生成一个雅各布矩阵的行模板，然后向内带入元素
 
 close(window);
 
