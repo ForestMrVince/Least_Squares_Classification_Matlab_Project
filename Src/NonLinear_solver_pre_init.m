@@ -9,9 +9,11 @@ pre_fun = sym('p%d',[size(train_images,1),1]);
 i_max = size(train_images,1);
 waitbar(1/(1+i_max));
 
+MyPar = parpool;
 parfor i = 1:i_max
     pre_fun(i) = sigmoid(train_images(i,:)*beta_char);
 end
+delete(MyPar);
 waitbar((1+i_max)/(1+i_max));%生成一个雅各布矩阵的行模板，然后向内带入元素
 
 close(window);
