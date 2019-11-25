@@ -1,4 +1,4 @@
-function [beta,k]=NonLinear_solver(train_images,b,Lambda,k_Max,Theta)
+function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,jacobian_matrix_fun)
 %非线性求解器
 %   将images中的Character挑出来，然后求解非线性最小二乘模型
 
@@ -8,19 +8,13 @@ window = waitbar(0,'非线性求解中，请稍候！');
 k = 0;
 beta_i1 = Theta;
 Epsilon = 0.0001;
-beta_char = sym('beta%d',[size(train_images,2),1]);
-waitbar(3/(13+k_Max));
-fun = arrayfun(@sigmoid,train_images*beta_char)-b;
-waitbar(6/(13+k_Max));
-jacobian_matrix_fun = jacobian(fun,beta_char);
-waitbar(9/(13+k_Max));
 
 %第一个f的值
 beta_i0 = beta_i1;
 f = subs(fun,beta_char,beta_i0);
-waitbar(11/(13+k_Max));
+waitbar(1/(3+k_Max));
 f = double(f);
-waitbar(13/(13+k_Max));
+waitbar(3/(3+k_Max));
 
 for i = 1:k_Max
     if sum(f) < Epsilon
@@ -44,12 +38,12 @@ for i = 1:k_Max
     
     k = i;
     
-    waitbar((13+k)/(13+k_Max));
+    waitbar((3+k)/(3+k_Max));
 end
 
 beta = beta_i0;
 
-waitbar((13+k_Max)/(13+k_Max));
+waitbar((3+k_Max)/(3+k_Max));
 
 close(window);
 
