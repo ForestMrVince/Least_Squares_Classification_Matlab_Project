@@ -1,4 +1,4 @@
-function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,jacobian_matrix_fun)
+function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,size_2)
 %非线性求解器
 %   将images中的Character挑出来，然后求解非线性最小二乘模型
 
@@ -8,6 +8,10 @@ window = waitbar(0,'非线性求解中，请稍候！');
 k = 0;
 beta_i1 = Theta;
 Epsilon = 0.0001;
+
+%初始量
+j_max = size(fun,1);
+jacobian_matrix = ones(j_max,size_2);
 
 %第一个f的值
 beta_i0 = beta_i1;
@@ -24,8 +28,13 @@ for i = 1:k_Max
     beta_i0 = beta_i1;
     f = f_1;
     
-    jacobian_matrix = subs(jacobian_matrix_fun,beta_char,beta_i0);
-    jacobian_matrix = double(jacobian_matrix);
+    MyPar = parpool;
+    parfor j = 1:j_max
+        jacobian_matrix_row_fun = jacobian(fun(j),beta_char);
+        jacobian_matrix_row = subs(jacobian_matrix_row_fun,beta_char,beta_i0);
+        jacobian_matrix(j,:) = double(jacobian_matrix_row);
+    end
+    delete(MyPar);
     
     beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*I)\(Lambda*beta_i0+(jacobian_matrix.')*f);
     

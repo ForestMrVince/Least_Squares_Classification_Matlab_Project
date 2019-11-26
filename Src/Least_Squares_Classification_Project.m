@@ -22,8 +22,10 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 %线性
 [Theta,b]=Linear_solver(train_images,train_labels,Character);
 %非线性
-[fun,jacobian_matrix_fun] = NonLinear_solver_init(beta_char,pre_fun,b);%初始化
-[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,jacobian_matrix_fun);
+%[fun,jacobian_matrix_fun] = NonLinear_solver_init(beta_char,pre_fun,b);%初始化
+[fun] = NonLinear_solver_init(pre_fun,b);%初始化
+%[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun);
+[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,size(train_images,2));
 
 %求解器结果测试
 % %线性
