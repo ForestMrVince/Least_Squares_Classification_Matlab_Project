@@ -18,9 +18,9 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 
 %求解器
 %线性
-[Theta,b]=Linear_solver(train_images,train_labels,Character);
-%非线性
-[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,b,train_images);
+% [Theta]=Linear_solver(train_images,train_labels,Character);
+% %非线性
+[beta,k]=NonLinear_solver(Lambda,k_Max,train_images,train_labels,Character);
 
 %求解器结果测试
 % %线性

@@ -1,17 +1,19 @@
-function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,b,train_images)
+function [beta,k]=NonLinear_solver(Lambda,k_Max,train_images,train_labels,Character)
 %非线性求解器
 %   将images中的Character挑出来，然后求解非线性最小二乘模型
 
 window = waitbar(0,'非线性求解中，请稍候！');
 
+%初始量
+[m,n] = size(train_images);
+I = eye(n);
+
 %非线性求解器设置
 k = 0;
-beta_i1 = Theta;
+beta_i1 = rand(n,1)/1000;
 Epsilon = 0.0000000001;
-
-%初始量
-n = size(train_images,2);
-I = eye(n);
+Character_vec = Character*ones(m,1);
+b = arrayfun(@b_generate,train_labels,Character_vec);
 
 % %初始化
 % beta_i0 = beta_i1;
