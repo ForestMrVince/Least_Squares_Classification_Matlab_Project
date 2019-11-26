@@ -15,17 +15,12 @@ k_Max = 6;      %最大循环次数
 [train_images,train_labels,test_images,test_labels] = Project_Init(train_images_file,train_labels_file,test_images_file,test_labels_file);
 %删除文件路径
 clearvars train_images_file train_labels_file test_images_file test_labels_file;
-%非线性求解器预初始化
-[beta_char,pre_fun] = NonLinear_solver_pre_init(train_images);
 
 %求解器
 %线性
 [Theta,b]=Linear_solver(train_images,train_labels,Character);
 %非线性
-%[fun,jacobian_matrix_fun] = NonLinear_solver_init(beta_char,pre_fun,b);%初始化
-[fun] = NonLinear_solver_init(pre_fun,b);%初始化
-%[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun);
-[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,size(train_images,2));
+[beta,k]=NonLinear_solver(Lambda,k_Max,Theta,b,train_images);
 
 %求解器结果测试
 % %线性
@@ -35,7 +30,7 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 %非线性
 [train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
     test_Z_right,test_Z_wrong,test_NZ_right,test_NZ_wrong]...
-    =NoLinear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
+    =NonLinear_solver_test(Theta,train_images,train_labels,test_images,test_labels,Character);
 
 %输出结果
 Results_output_xlsx(train_Z_right,train_Z_wrong,train_NZ_right,train_NZ_wrong,...
