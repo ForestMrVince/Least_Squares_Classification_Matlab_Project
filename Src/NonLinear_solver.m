@@ -1,4 +1,4 @@
-function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,beta_char,fun,size_2)
+function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,b,train_images)
 %非线性求解器
 %   将images中的Character挑出来，然后求解非线性最小二乘模型
 
@@ -7,52 +7,50 @@ window = waitbar(0,'非线性求解中，请稍候！');
 %非线性求解器设置
 k = 0;
 beta_i1 = Theta;
-Epsilon = 0.0001;
+Epsilon = 0.0000000001;
 
 %初始量
-j_max = size(fun,1);
-jacobian_matrix = ones(j_max,size_2);
+n = size(train_images,2);
+I = eye(n);
 
-%第一个f的值
-beta_i0 = beta_i1;
-f = subs(fun,beta_char,beta_i0);
-waitbar(1/(3+k_Max));
-f = double(f);
-waitbar(3/(3+k_Max));
+% %初始化
+% beta_i0 = beta_i1;
+% f = arrayfun(@sigmoid,(train_images*beta_i0))-b;
+% waitbar(3/(3+k_Max));
 
 for i = 1:k_Max
-    if sum(f) < Epsilon
-       break; 
-    end
     
     beta_i0 = beta_i1;
-    f = f_1;
     
-    MyPar = parpool;
-    parfor j = 1:j_max
-        jacobian_matrix_row_fun = jacobian(fun(j),beta_char);
-        jacobian_matrix_row = subs(jacobian_matrix_row_fun,beta_char,beta_i0);
-        jacobian_matrix(j,:) = double(jacobian_matrix_row);
-    end
-    delete(MyPar);
+    f_0 = arrayfun(@sigmoid,(train_images*beta_i0))-b;
+    jacobian_matrix = arrayfun(@sigmoid_derivative,f_0).*train_images;
+    beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*I)\(Lambda*beta_i0+(jacobian_matrix.')*f_0);
     
-    beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*I)\(Lambda*beta_i0+(jacobian_matrix.')*f);
-    
-    f_1 = subs(fun,beta_char,beta_i1);
-    f_1 = double(f_1);
-    
-    if f_1 > f
+    if ((f_0.')*f_0) < Epsilon
         break;
+    end
+    
+    if i == 1
+        f_1 = f_0;
+    else
+        if ((f_1.')*f_1) <= ((f_0.')*f_0)
+            break;
+        else
+            if beta_i1 == beta_i0
+                break;
+            end
+        end
+        f_1 = f_0;
     end
     
     k = i;
     
-    waitbar((3+k)/(3+k_Max));
+    waitbar(k/k_Max);
 end
 
 beta = beta_i0;
 
-waitbar((3+k_Max)/(3+k_Max));
+waitbar(k_Max/k_Max);
 
 close(window);
 
