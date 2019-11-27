@@ -12,7 +12,6 @@ B_I = eye(n-1);%正则化系数（Lambda）对应的矩阵（B）的第一列后面的列
 
 %非线性求解器设置
 k = 0;
-% beta_i1 = zeros(n,1);
 beta_i1 = Theta;
 Epsilon = 0.0000000001;
 Lambda_k = 0.1;
