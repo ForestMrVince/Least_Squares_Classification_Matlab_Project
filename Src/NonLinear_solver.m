@@ -26,11 +26,12 @@ for i = 1:k_Max
     
     beta_i0 = beta_i1;
     
-    f_0_before_b = arrayfun(@sigmoid,(train_images*beta_i0));
-    jacobian_matrix = arrayfun(@sigmoid_derivative,f_0_before_b).*train_images;
-    f_0 = f_0_before_b - b;
-    B = [B_Zero1,B_I];
+    f_0_before_b = arrayfun(@sigmoid,(train_images*beta_i0));                       %求雅各布矩阵
+    jacobian_matrix = arrayfun(@sigmoid_derivative,f_0_before_b).*train_images;     %求雅各布矩阵
+    f_0 = f_0_before_b - b;     %求此时f的输出值
+    B = [B_Zero1,B_I];          %求Lambda对应矩阵
     beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*(B.')*B+Lambda_k*I)\(Lambda*(B.')*B*beta_i0+(jacobian_matrix.')*f_0);
+    %↑标准的线性最小二乘计算公式化简后的结果
     
     if ((f_0.')*f_0) < Epsilon
         break;
