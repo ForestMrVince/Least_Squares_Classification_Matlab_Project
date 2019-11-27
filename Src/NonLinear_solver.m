@@ -16,11 +16,6 @@ beta_i1 = Theta;
 Epsilon = 0.0000000001;
 Lambda_k = 0.1;
 
-% %³õÊ¼»¯
-% beta_i0 = beta_i1;
-% f = arrayfun(@sigmoid,(train_images*beta_i0))-b;
-% waitbar(3/(3+k_Max));
-
 for i = 1:k_Max
     
     beta_i0 = beta_i1;
