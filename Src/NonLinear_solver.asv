@@ -4,18 +4,17 @@ function [beta,k]=NonLinear_solver(Lambda,k_Max,Theta,b,train_images)
 
 window = waitbar(0,'非线性求解中，请稍候！');
 
+%非线性求解器设置
+k = 0;
+beta_i1 = zeros();
+Epsilon = 0.0000000001;
+Lambda_k = 0.1;
+
 %初始量
 n = size(train_images,2);
 I = eye(n);
 B_Zero1 = zeros(n-1,1);%正则化系数（Lambda）对应的矩阵（B）的第一列
 B_I = eye(n-1);%正则化系数（Lambda）对应的矩阵（B）的第一列后面的列
-
-%非线性求解器设置
-k = 0;
-% beta_i1 = zeros(n,1);
-beta_i1 = Theta;
-Epsilon = 0.0000000001;
-Lambda_k = 0.1;
 
 % %初始化
 % beta_i0 = beta_i1;
@@ -26,9 +25,8 @@ for i = 1:k_Max
     
     beta_i0 = beta_i1;
     
-    f_0_before_b = arrayfun(@sigmoid,(train_images*beta_i0));
-    jacobian_matrix = arrayfun(@sigmoid_derivative,f_0_before_b).*train_images;
-    f_0 = f_0_before_b - b;
+    f_0 = arrayfun(@sigmoid,(train_images*beta_i0))-b;
+    jacobian_matrix = arrayfun(@sigmoid_derivative,f_0).*train_images;
     B = [B_Zero1,B_I];
     beta_i1 = beta_i0 - ((jacobian_matrix.')*jacobian_matrix+Lambda*(B.')*B+Lambda_k*I)\(Lambda*(B.')*B*beta_i0+(jacobian_matrix.')*f_0);
     
