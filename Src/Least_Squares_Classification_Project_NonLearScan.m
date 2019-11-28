@@ -31,18 +31,18 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 %线性
 [Theta,b]=Linear_solver(train_images,train_labels,Character);
 
-window = waitbar(0,'非线性求解扫描中，请稍候！');
-for i = 1:m
-    for j = 1:n
+main_window = waitbar(0,'非线性求解扫描中，请稍候！');
+for m_i = 1:m
+    for n_j = 1:n
 %非线性
-        [beta,k(i,j)]=NonLinear_solver(Lambda(i),k_Max(j),Theta,b,train_images);
+        [beta,k(m_i,n_j)]=NonLinear_solver(Lambda(m_i),k_Max(n_j),Theta,b,train_images);
 
 %求解器结果测试
 %非线性
-        [train_Z_right(i,j),train_Z_wrong(i,j),train_NZ_right(i,j),train_NZ_wrong(i,j),...
-            test_Z_right(i,j),test_Z_wrong(i,j),test_NZ_right(i,j),test_NZ_wrong(i,j)]...
+        [train_Z_right(m_i,n_j),train_Z_wrong(m_i,n_j),train_NZ_right(m_i,n_j),train_NZ_wrong(m_i,n_j),...
+            test_Z_right(m_i,n_j),test_Z_wrong(m_i,n_j),test_NZ_right(m_i,n_j),test_NZ_wrong(m_i,n_j)]...
             =NonLinear_solver_test(beta,train_images,train_labels,test_images,test_labels,Character);
     end
-    waitbar(i/m);
+    waitbar(m_i/m);
 end
-close(window);
+close(main_window);
