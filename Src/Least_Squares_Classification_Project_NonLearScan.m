@@ -31,6 +31,7 @@ clearvars train_images_file train_labels_file test_images_file test_labels_file;
 %线性
 [Theta,b]=Linear_solver(train_images,train_labels,Character);
 
+window = waitbar(0,'非线性求解扫描中，请稍候！');
 for i = 1:m
     for j = 1:n
 %非线性
@@ -42,4 +43,6 @@ for i = 1:m
             test_Z_right(i,j),test_Z_wrong(i,j),test_NZ_right(i,j),test_NZ_wrong(i,j)]...
             =NonLinear_solver_test(beta,train_images,train_labels,test_images,test_labels,Character);
     end
+    waitbar(i/m);
 end
+close(window);
