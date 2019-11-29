@@ -1,6 +1,8 @@
 function NonLinear_scan_plot(k_Max,Lambda,...
     train_NZ_wrong,train_Z_wrong,train_NZ_right,train_Z_right,...
     test_NZ_wrong,test_Z_wrong,test_NZ_right,test_Z_right)
+%正则化参数和最大循环次数与错误率等高线图绘制
+%   无
 
 train_error_rate = (train_NZ_wrong + train_Z_wrong)./(train_NZ_wrong + train_Z_wrong + train_NZ_right + train_Z_right);
 test_error_rate = (test_NZ_wrong + test_Z_wrong)./(test_NZ_wrong + test_Z_wrong + test_NZ_right + test_Z_right);
