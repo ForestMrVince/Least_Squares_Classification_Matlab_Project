@@ -53,3 +53,8 @@ for m_i = 1:m
     disp('当前进行至 n：');
     disp(n_j);
 end
+
+%绘制错误率等高线图
+NonLinear_scan_plot(k_Max,Lambda,...
+    train_NZ_wrong,train_Z_wrong,train_NZ_right,train_Z_right,...
+    test_NZ_wrong,test_Z_wrong,test_NZ_right,test_Z_right)
