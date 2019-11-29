@@ -7,7 +7,9 @@ train_images_file = '../Data/MNIST/train-images.idx3-ubyte';
 train_labels_file = '../Data/MNIST/train-labels.idx1-ubyte';
 test_images_file = '../Data/MNIST/t10k-images.idx3-ubyte';
 test_labels_file = '../Data/MNIST/t10k-labels.idx1-ubyte';
-Character = 0;  %需要挑选的变量
+%需要挑选的变量
+Character = 0;
+%非线性求解所需变量
 Lambda = 100;   %Lambda值
 k_Max = 6;      %最大循环次数
 
